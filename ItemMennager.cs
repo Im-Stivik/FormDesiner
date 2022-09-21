@@ -123,6 +123,24 @@ namespace FormDesiner
             }
         }
 
+        public class Lable : Item
+        {
+            public Lable(PropertyMennager.LocationProperty location, PropertyMennager.NameProperty name,
+                PropertyMennager.SizeProperty size, PropertyMennager.TabIndexProperty tabIndex)
+            {
+                properties.Add(location);
+                properties.Add(name);
+                properties.Add(size);
+                properties.Add(tabIndex);
+                this._name = name.Value;
+            }
+
+            public override string GetSource()
+            {
+                return "private System.Windows.Forms.Label " + _name + ";";
+            }
+        }
+        
         class LinkLable : ItemMennager.Lable
         {
             public LinkLable(PropertyMennager.LocationProperty location, PropertyMennager.NameProperty name,
@@ -136,24 +154,6 @@ namespace FormDesiner
             public override string GetSource()
             {
                 return "private System.Windows.Forms.LinkLabel " + _name + ";";
-            }
-        }
-
-        public class Lable : Item
-        {
-            public Lable(PropertyMennager.LocationProperty location, PropertyMennager.NameProperty name,
-                PropertyMennager.SizeProperty size, PropertyMennager.TabIndexProperty tabIndex)
-            {
-                properties.Add(location);
-                properties.Add(name);
-                properties.Add(size);
-                properties.Add(tabIndex);
-                this._name = name.Value;
-            }
-            
-            public override string GetSource()
-            {
-                return "private System.Windows.Forms.Label " + _name + ";";
             }
         }
 
