@@ -1,0 +1,10 @@
+C:\Users\s.mogi\Desktop\New folder\FormDesiner\FormDesiner\bin\Debug\FormDesiner.exe.config
+C:\Users\s.mogi\Desktop\New folder\FormDesiner\FormDesiner\bin\Debug\FormDesiner.exe
+C:\Users\s.mogi\Desktop\New folder\FormDesiner\FormDesiner\bin\Debug\FormDesiner.pdb
+C:\Users\s.mogi\Desktop\New folder\FormDesiner\FormDesiner\obj\Debug\FormDesiner.csprojAssemblyReference.cache
+C:\Users\s.mogi\Desktop\New folder\FormDesiner\FormDesiner\obj\Debug\FormDesiner.Form1.resources
+C:\Users\s.mogi\Desktop\New folder\FormDesiner\FormDesiner\obj\Debug\FormDesiner.Properties.Resources.resources
+C:\Users\s.mogi\Desktop\New folder\FormDesiner\FormDesiner\obj\Debug\FormDesiner.csproj.GenerateResource.cache
+C:\Users\s.mogi\Desktop\New folder\FormDesiner\FormDesiner\obj\Debug\FormDesiner.csproj.CoreCompileInputs.cache
+C:\Users\s.mogi\Desktop\New folder\FormDesiner\FormDesiner\obj\Debug\FormDesiner.exe
+C:\Users\s.mogi\Desktop\New folder\FormDesiner\FormDesiner\obj\Debug\FormDesiner.pdb
