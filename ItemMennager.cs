@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Security.Permissions;
 
 namespace FormDesiner
 {
@@ -10,6 +12,8 @@ namespace FormDesiner
 
         public class Button : Item
         {
+            
+            
             public Button(PropertyMennager.LocationProperty location, PropertyMennager.NameProperty name,
                 PropertyMennager.SizeProperty size, PropertyMennager.TabIndexProperty tabIndex,
                 PropertyMennager.TextProperty text,
@@ -24,6 +28,11 @@ namespace FormDesiner
                 properties.Add(text);
                 properties.Add(useVisualStyleBackColor);
                 this._name = name.Value;
+            }
+
+            public override string GetSource()
+            {
+                return "private System.Windows.Forms.Button " + _name + ";";
             }
         }
         
@@ -44,6 +53,11 @@ namespace FormDesiner
                 properties.Add(useVisualStyleBackColor);
                 this._name = name.Value;
             }
+            
+            public override string GetSource()
+            {
+                return "private System.Windows.Forms.CheckBox " + _name + ";";
+            }
         }
 
         public class CheckedListBox : Item
@@ -61,8 +75,13 @@ namespace FormDesiner
                 
                 this._name = name.Value;
             }
+            
+            public override string GetSource()
+            {
+                return "private System.Windows.Forms.CheckedListBox " + _name + ";";
+            }
         }
-        
+
         public class Lable : Item
         {
             public Lable(PropertyMennager.LocationProperty location, PropertyMennager.NameProperty name,
@@ -77,6 +96,11 @@ namespace FormDesiner
                 properties.Add(tabIndex);
                 properties.Add(text);
                 this._name = name.Value;
+            }
+            
+            public override string GetSource()
+            {
+                return "private System.Windows.Forms.Label " + _name + ";";
             }
         }
 
@@ -146,5 +170,7 @@ namespace FormDesiner
             _name = name;
             EditProperty(new PropertyMennager.NameProperty(name));
         }
+
+        public abstract string GetSource();
     }
 }
