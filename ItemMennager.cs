@@ -81,20 +81,73 @@ namespace FormDesiner
                 return "private System.Windows.Forms.CheckedListBox " + _name + ";";
             }
         }
-
-        public class Lable : Item
+        
+        class ComboBox : Item
         {
-            public Lable(PropertyMennager.LocationProperty location, PropertyMennager.NameProperty name,
-                PropertyMennager.SizeProperty size, PropertyMennager.TabIndexProperty tabIndex,
-                PropertyMennager.TextProperty text)
+            public ComboBox(PropertyMennager.LocationProperty location, PropertyMennager.NameProperty name,
+                PropertyMennager.SizeProperty size, PropertyMennager.TabIndexProperty tabIndex)
             {
-                PropertyMennager.AutoSizeProperty autoSize = new PropertyMennager.AutoSizeProperty(true);
-                properties.Add(autoSize);
+                PropertyMennager.FormattingEnabledProperty formattingEnabled = new PropertyMennager.FormattingEnabledProperty(true);
+                properties.Add(formattingEnabled);
+                
                 properties.Add(location);
                 properties.Add(name);
                 properties.Add(size);
                 properties.Add(tabIndex);
-                properties.Add(text);
+                
+                this._name = name.Value;
+            }
+            
+            public override string GetSource()
+            {
+                return "private System.Windows.Forms.ComboBox " + _name + ";";
+            }
+        }
+        
+        class DateTimePicker : Item
+        {
+            public DateTimePicker(PropertyMennager.LocationProperty location, PropertyMennager.NameProperty name,
+                PropertyMennager.SizeProperty size, PropertyMennager.TabIndexProperty tabIndex)
+            {
+                properties.Add(location);
+                properties.Add(name);
+                properties.Add(size);
+                properties.Add(tabIndex);
+                
+                this._name = name.Value;
+            }
+            
+            public override string GetSource()
+            {
+                return "private System.Windows.Forms.DateTimePicker " + _name + ";";
+            }
+        }
+
+        class LinkLable : ItemMennager.Lable
+        {
+            public LinkLable(PropertyMennager.LocationProperty location, PropertyMennager.NameProperty name,
+                PropertyMennager.SizeProperty size, PropertyMennager.TabIndexProperty tabIndex) 
+                : base(location, name, size, tabIndex)
+            {
+                PropertyMennager.TabStopProperty tabstop = new PropertyMennager.TabStopProperty(true);
+                properties.Add(tabstop);
+            }
+            
+            public override string GetSource()
+            {
+                return "private System.Windows.Forms.LinkLabel " + _name + ";";
+            }
+        }
+
+        public class Lable : Item
+        {
+            public Lable(PropertyMennager.LocationProperty location, PropertyMennager.NameProperty name,
+                PropertyMennager.SizeProperty size, PropertyMennager.TabIndexProperty tabIndex)
+            {
+                properties.Add(location);
+                properties.Add(name);
+                properties.Add(size);
+                properties.Add(tabIndex);
                 this._name = name.Value;
             }
             
@@ -105,8 +158,6 @@ namespace FormDesiner
         }
 
         //TODO:: Pointer
-        //TODO:: ComboBox
-        //TODO:: DateTimePicker
         //TODO:: LinkLabel
         //TODO:: ListBox
         //TODO:: ListView

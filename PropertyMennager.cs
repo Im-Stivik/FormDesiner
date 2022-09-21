@@ -264,6 +264,13 @@ namespace FormDesiner
             }
         }
         
+        public class TabStopProperty : PropertyTypes.BoolProperty
+        {
+            public TabStopProperty(bool value) : base("TabStop", value)
+            {
+            }
+        }
+        
         #endregion
         
     }
