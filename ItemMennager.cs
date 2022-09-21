@@ -158,7 +158,6 @@ namespace FormDesiner
         }
 
         //TODO:: Pointer
-        //TODO:: LinkLabel
         //TODO:: ListBox
         //TODO:: ListView
         //TODO:: MaskedTextBox

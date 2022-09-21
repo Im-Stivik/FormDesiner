@@ -1,3 +1,6 @@
+using System;
+using System.Runtime.CompilerServices;
+
 namespace FormDesiner
 {
     public class PropertyMennager
@@ -16,7 +19,7 @@ namespace FormDesiner
                     Value = value;
                 }
                 
-                public string GiveLine()
+                public virtual string GiveLine()
                 {
                     return Name+ " = " + '"'+Value+'"' + ";";
                 }
@@ -43,7 +46,7 @@ namespace FormDesiner
                     Value = value;
                 }
                 
-                public string GiveLine()
+                public virtual string GiveLine()
                 {
                     return Name+ " = " + " + Value; ";
                 }
@@ -70,7 +73,7 @@ namespace FormDesiner
                     Value = value;
                 }
                 
-                public string GiveLine()
+                public virtual string GiveLine()
                 {
                     return Name+ " = " + Value.ToString() + ";";
                 }
@@ -110,7 +113,7 @@ namespace FormDesiner
                     Value = new System.Drawing.Point(x, y);
                 }
                 
-                public string GiveLine()
+                public virtual string GiveLine()
                 {
                     return Name+ " = " + "new System.Drawing.Point(" + Value.X + ", " + Value.Y + ");";
                 }
@@ -145,7 +148,7 @@ namespace FormDesiner
                     Value = new System.Drawing.Size(x, y);
                 }
                 
-                public string GiveLine()
+                public virtual string GiveLine()
                 {
                     return Name+ " = " + "new System.Drawing.Size(" + Value.Width + ", " + Value.Height + ");";
                 }
@@ -180,7 +183,7 @@ namespace FormDesiner
                     Value = new System.Drawing.SizeF(x, y);
                 }
                 
-                public string GiveLine()
+                public virtual string GiveLine()
                 {
                     return Name+ " = " + "new System.Drawing.SizeF(" + Value.Width + ", " + Value.Height + ");";
                 }
@@ -197,6 +200,36 @@ namespace FormDesiner
                     return Name;
                 }
             }
+
+            public class StaticSelectionProperty : Iproperty
+            {
+                public int Value { get; set; }
+                protected string Name { get; }
+                public string[] Selection { get; set; }
+                
+                public StaticSelectionProperty(string name, int value, string[] selection)
+                {
+                    Name = name;
+                    Value = value;
+                    Selection = selection;
+                }
+                
+                public virtual string GiveLine()
+                {
+                    return "";
+                }
+                
+                public virtual void GiveValue(string value)
+                {
+                    Value = Array.IndexOf(Selection, value);
+                }
+                
+                public virtual string GetName()
+                {
+                    return Name;
+                }
+            }
+            
         }
         
         #region Properties
@@ -270,6 +303,41 @@ namespace FormDesiner
             {
             }
         }
+        
+        public class AccessibleDescriptionProperty : PropertyTypes.StringProperty
+        {
+            public AccessibleDescriptionProperty(string value) : base("AccessibleDescription", value)
+            {
+            }
+        }
+        
+        public class AccessibleNameProperty : PropertyTypes.StringProperty
+        {
+            public AccessibleNameProperty(string value) : base("AccssibleName", value)
+            {
+            }
+        }
+
+        public class AccessibleRoleProperty : PropertyTypes.StaticSelectionProperty
+        {
+        public AccessibleRoleProperty(int value) : base("AccesiibleRole", value,
+            new string[] {"Default", "None", "TitleBar", "MenuBar", "ScrollBar", "Grip", "Sound", "Cursor",
+                "Caret", "Alert", "Window", "Menu", "Client", "MenuPopup", "MenuItem", "ToolTip", "Application", 
+                "Document", "Pane", "Chart", "Separator", "Dialog", "Border", "Grouping", "Separator", "ToolBar",
+                "StatusBar", "Table", "ColumnHeader", "Column", "RowHeader", "Row", "Cell", "Link", "HelpBalloon",
+                "Character", "List", "ListItem", "Outline", "OutlineItem", "PageTab", "PropertyPage", "Indicator",
+                "Graphic", "StaticText", "Text", "PushButton", "CheckButton", "RadioButton", "ComboBox", "DropList",
+                "ProgressBar", "Dial", "HotkeyField", "Slider", "SpinButton", "Diagram", "Animation", "Equation",
+                "ButtonDropDown", "ButtonMenu", "ButtonDropDownGrid", "WhiteSpace", "PageTabList", "Clock", "SplitButton",
+                "IpAddress", "OutlineButton"}){ }
+
+        public override string GiveLine()
+        {
+            return "AccessibleRole = System.Windows.Forms.AccessibleRole." + Selection[Value] + ";";
+        }
+        }
+        
+        
         
         #endregion
         
