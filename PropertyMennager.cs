@@ -1,572 +1,194 @@
-using System;
-using System.Security.Policy;
-using System.Security.Principal;
 using System.Windows.Forms;
 
 namespace FormDesiner
 {
     public class PropertyMennager
     {
-        public class PropertyTypes
+        public enum DataTypes
         {
-            public class BaseProperty
+            String,
+            Int,
+            Double,
+            Boolean,
+            DateTime,
+            Image,
+            Color,
+            Font,
+            Point,
+            Size,
+            Rectangle,
+            Enum,
+            Object
+        }
+        
+        public enum PropertyNames
+        {
+            AutoSize,
+            Location,
+            Name,
+            Size,
+            TabIndex,
+            Text,
+            AccessibleDescription,
+            AccessibleName,
+            AccessibleRole,
+            BackColor,
+            Font,
+        }
+
+        public static Propertyes GetDataTypeByPropertyName(PropertyNames propertyName)
+        {
+            //TODO:: implement this method
+            return null;
+        }
+        
+        public class Property<T>
+        {
+            public PropertyNames Name { get; }
+            public T Value { get; set; }
+            public DataTypes Type { get; }
+            public Property(PropertyNames name, T value, DataTypes type)
             {
-                protected string name;
+                Name = name;
+                Value = value;
+                Type = type;
             }
 
-            public abstract class StringProperty : BaseProperty, IProperty
+            public virtual string GetLine()
             {
-                private string value;
-
-                public StringProperty(string name, string value)
-                {
-                    this.name = name;
-                    this.value = value;
-                }
-
-                public void SetValue(object value)
-                {
-                    this.value = (string)value;
-                }
-
-                public object GetValue()
-                {
-                    return this.value;
-                }
-
-                public string GetPropertyName()
-                {
-                    return this.name;
-                }
-
-                public string GetPropertyType()
-                {
-                    return "string";
-                }
-
-                public virtual string GetLine()
-                {
-                    return this.name + " = " + this.value;
-                }
-            }
-
-            public abstract class IntProperty : BaseProperty, IProperty
-            {
-                private int value;
-
-                public IntProperty(string name, int value)
-                {
-                    this.name = name;
-                    this.value = value;
-                }
-
-                public void SetValue(object value)
-                {
-                    this.value = (int)value;
-                }
-
-                public object GetValue()
-                {
-                    return this.value;
-                }
-
-                public string GetPropertyName()
-                {
-                    return this.name;
-                }
-
-                public string GetPropertyType()
-                {
-                    return "int";
-                }
-
-                public virtual string GetLine()
-                {
-                    return this.name + " = " + this.value;
-                }
-            }
-
-            public abstract class BoolProperty : BaseProperty, IProperty
-            {
-                private bool value;
-
-                public BoolProperty(string name, bool value)
-                {
-                    this.name = name;
-                    this.value = value;
-                }
-
-                public void SetValue(object value)
-                {
-                    this.value = (bool)value;
-                }
-
-                public object GetValue()
-                {
-                    return this.value;
-                }
-
-                public string GetPropertyName()
-                {
-                    return this.name;
-                }
-
-                public string GetPropertyType()
-                {
-                    return "bool";
-                }
-
-                public virtual string GetLine()
-                {
-                    return this.name + " = " + this.value;
-                }
-            }
-
-            public abstract class FloatProperty : BaseProperty, IProperty
-            {
-                private float value;
-
-                public FloatProperty(string name, float value)
-                {
-                    this.name = name;
-                    this.value = value;
-                }
-
-                public void SetValue(object value)
-                {
-                    this.value = (float)value;
-                }
-
-                public object GetValue()
-                {
-                    return this.value;
-                }
-
-                public string GetPropertyName()
-                {
-                    return this.name;
-                }
-
-                public string GetPropertyType()
-                {
-                    return "float";
-                }
-
-                public virtual string GetLine()
-                {
-                    return this.name + " = " + this.value;
-                }
-            }
-
-            public abstract class PointProperty : BaseProperty, IProperty
-            {
-                private System.Drawing.Point value;
-
-                public PointProperty(string name, System.Drawing.Point value)
-                {
-                    this.name = name;
-                    this.value = value;
-                }
-
-                public void SetValue(object value)
-                {
-                    this.value = (System.Drawing.Point)value;
-                }
-
-                public object GetValue()
-                {
-                    return this.value;
-                }
-
-                public string GetPropertyName()
-                {
-                    return this.name;
-                }
-
-                public string GetPropertyType()
-                {
-                    return "System.Drawing.Point";
-                }
-
-                public virtual string GetLine()
-                {
-                    return this.name + " = new System.Drawing.Point(" + this.value.X + ", " + this.value.Y + ")";
-                }
-            }
-
-            public abstract class SizeProperty : BaseProperty, IProperty
-            {
-                private System.Drawing.Size value;
-
-                public SizeProperty(string name, System.Drawing.Size value)
-                {
-                    this.name = name;
-                    this.value = value;
-                }
-
-                public void SetValue(object value)
-                {
-                    this.value = (System.Drawing.Size)value;
-                }
-
-                public object GetValue()
-                {
-                    return this.value;
-                }
-
-                public string GetPropertyName()
-                {
-                    return this.name;
-                }
-
-                public string GetPropertyType()
-                {
-                    return "System.Drawing.Size";
-                }
-
-                public virtual string GetLine()
-                {
-                    return this.name + " = new System.Drawing.Size(" + this.value.Width + ", " + this.value.Height +
-                           ")";
-                }
-            }
-
-            public abstract class SelectionProperty : BaseProperty, IProperty
-            {
-                protected string[] values;
-                protected int selected;
-                
-                public SelectionProperty(string name, string[] values)
-                {
-                    this.name = name;
-                    this.values = values;
-                    this.selected = 0;
-                }
-
-                public SelectionProperty(string name, string[] values,int index)
-                {
-                    this.name = name;
-                    this.values = values;
-                    this.selected = index;
-                }
-
-                public void SetValue(object value)
-                {
-                    for(int i = 0; i < this.values.Length; i++)
-                    {
-                        if (this.values[i].Equals(value))
-                        {
-                            this.selected = i;
-                            return;
-                        }
-                    }
-                    //if the value is not in the list, add it to the list
-                    this.selected = this.values.Length;
-                    Array.Resize(ref this.values, this.values.Length + 1);
-                    this.values[this.selected] = (string)value;
-                }
-                
-                public object GetValue()
-                {
-                    return this.values[this.selected];
-                }
-                
-                public string GetPropertyName()
-                {
-                    return this.name;
-                }
-                
-                public string GetPropertyType()
-                {
-                    return "Selection";
-                }
-                
-                public virtual string GetLine()
-                {
-                    return this.name + " = " + this.values[this.selected];
-                }
-                
-                public object[] GetValues()
-                {
-                    return this.values;
-                }
-                
-                public int GetSelected()
-                {
-                    return this.selected;
-                }
-            }
-            
-            public abstract class ColorProperty : BaseProperty, IProperty
-            {
-                private System.Drawing.Color value;
-                //TODO: add system color and static color selection
-    
-                public ColorProperty(string name, System.Drawing.Color value)
-                {
-                    this.name = name;
-                    this.value = value;
-                }
-
-                public void SetValue(object value)
-                {
-                    this.value = (System.Drawing.Color)value;
-                }
-
-                public object GetValue()
-                {
-                    return this.value;
-                }
-
-                public string GetPropertyName()
-                {
-                    return this.name;
-                }
-
-                public string GetPropertyType()
-                {
-                    return "Color";
-                }
-
-                public virtual string GetLine()
-                {
-                    return this.name + " = System.Drawing.Color.FromArgb(" + this.value.A + ", " + this.value.R + ", " + this.value.G + ", " + this.value.B + ")";
-                }
+                return Name + " = " + Value + ";";
             }
         }
 
-        public class Properties
+        public class Propertyes
         {
-            public class AutoSizeProperty : PropertyTypes.BoolProperty
+            public class AutoSizeProperty : Property<bool>
             {
-                public AutoSizeProperty(bool value) : base("AutoSize", value)
+                public AutoSizeProperty(bool value) : base(PropertyNames.AutoSize, value, DataTypes.Boolean)
                 {
                 }
             }
-
-            public class LocationProperty : PropertyTypes.PointProperty
+            
+            public class LocationProperty : Property<System.Drawing.Point>
             {
-                public LocationProperty(System.Drawing.Point value) : base("Location", value)
+                public LocationProperty(System.Drawing.Point value) : base(PropertyNames.Location, value,
+                    DataTypes.Point)
                 {
+                }
+
+                public override string GetLine()
+                {
+                    return Name + " = new Point(" + Value.X + ", " + Value.Y + ");";
                 }
             }
-
-            public class NameProperty : PropertyTypes.StringProperty
+            
+            public class NameProperty : Property<string>
             {
-                public NameProperty(string value) : base("Name", value)
+                public NameProperty(string value) : base(PropertyNames.Name,
+                    value, DataTypes.String)
                 {
-                }
-            }
-
-            public class SizeProperty : PropertyTypes.SizeProperty
-            {
-                public SizeProperty(System.Drawing.Size value) : base("Size", value)
-                {
-                }
-            }
-
-            public class TabIndexProperty : PropertyTypes.IntProperty
-            {
-                public TabIndexProperty(int value) : base("TabIndex", value)
-                {
-                }
-            }
-
-            public class TextProperty : PropertyTypes.StringProperty
-            {
-                public TextProperty(string value) : base("Text", value)
-                {
-                }
-            }
-
-            public class AccessibleDescriptionProperty : PropertyTypes.StringProperty
-            {
-                public AccessibleDescriptionProperty(string value) : base("AccessibleDescription", value)
-                {
-                }
-            }
-
-            public class AccessibleNameProperty : PropertyTypes.StringProperty
-            {
-                public AccessibleNameProperty(string value) : base("AccessibleName", value)
-                {
-                }
-            }
-
-            public class AccessibleRoleProperty : PropertyTypes.SelectionProperty
-            {
-                public AccessibleRoleProperty(): base("AccessibleRole", Enum.GetNames(typeof(AccessibleRole)))
-                {
-                    
-                }
-
-                public AccessibleRoleProperty(string value) : base("AccessibleRole", Enum.GetNames(typeof(AccessibleRole)))
-                {
-                    this.SetValue(value);
-                }
-                
-                public AccessibleRoleProperty(AccessibleRole value) : base("AccessibleRole", Enum.GetNames(typeof(AccessibleRole)))
-                {
-                    this.SetValue(value.ToString());
-                }
-                
-                public AccessibleRoleProperty(int index) : base("AccessibleRole", Enum.GetNames(typeof(AccessibleRole)),index)
-                {
-                }
-                
-                public void SetValue(AccessibleRole value)
-                {
-                    this.SetValue(value.ToString());
-                }
-                
-                public AccessibleRole GetAccessibleRole()
-                {
-                    return (AccessibleRole)Enum.Parse(typeof(AccessibleRole), this.values[this.selected]);
                 }
                 
                 public override string GetLine()
                 {
-                    return this.name + " = System.Windows.Forms.AccessibleRole." + this.values[this.selected];
+                    return Name + " = \"" + Value + "\";";
                 }
             }
             
-            public class BackColorProperty : PropertyTypes.ColorProperty
+            public class SizeProperty : Property<System.Drawing.Size>
             {
-                public BackColorProperty(System.Drawing.Color value) : base("BackColor", value)
+                public SizeProperty(System.Drawing.Size value) : base(PropertyNames.Size, value, 
+                    DataTypes.Size)
                 {
                 }
-            }
 
-            public class BorderStyleProperty : PropertyTypes.SelectionProperty
+                public override string GetLine()
+                {
+                    return Name + " = new Size(" + Value.Width + ", " + Value.Height + ");";
+                }
+            }
+            
+            public class TabIndexProperty : Property<int>
             {
-                public BorderStyleProperty() : base("BorderStyle", Enum.GetNames(typeof(BorderStyle)))
+                public TabIndexProperty(int value) : base(PropertyNames.TabIndex, value, DataTypes.Int)
                 {
                 }
-                
-                public BorderStyleProperty(string value) : base("BorderStyle", Enum.GetNames(typeof(BorderStyle)))
+            }
+            
+            public class TextProperty : Property<string>
+            {
+                public TextProperty(string value) : base(PropertyNames.Text, value, DataTypes.String)
                 {
-                    this.SetValue(value);
-                }
-                
-                public BorderStyleProperty(BorderStyle value) : base("BorderStyle", Enum.GetNames(typeof(BorderStyle)))
-                {
-                    this.SetValue(value.ToString());
-                }
-                
-                public BorderStyleProperty(int index) : base("BorderStyle", Enum.GetNames(typeof(BorderStyle)),index)
-                {
-                }
-                
-                public void SetValue(BorderStyle value)
-                {
-                    this.SetValue(value.ToString());
-                }
-                
-                public BorderStyle GetBorderStyle()
-                {
-                    return (BorderStyle)Enum.Parse(typeof(BorderStyle), this.values[this.selected]);
                 }
                 
                 public override string GetLine()
                 {
-                    return this.name + " = System.Windows.Forms.BorderStyle." + this.values[this.selected];
+                    return Name + " = \"" + Value + "\";";
                 }
             }
             
-            public class CursorProperty : PropertyTypes.SelectionProperty
+            public class AccessibleDescriptionProperty : Property<string>
             {
-                public CursorProperty() : base("Cursor", Enum.GetNames(typeof(Cursor)))
+                public AccessibleDescriptionProperty(string value) : base(PropertyNames.AccessibleDescription, 
+                    value, DataTypes.String)
                 {
-                }
-                
-                public CursorProperty(string value) : base("Cursor", Enum.GetNames(typeof(Cursor)))
-                {
-                    this.SetValue(value);
-                }
-                
-                public CursorProperty(Cursor value) : base("Cursor", Enum.GetNames(typeof(Cursor)))
-                {
-                    this.SetValue(value.ToString());
-                }
-                
-                public CursorProperty(int index) : base("Cursor", Enum.GetNames(typeof(Cursor)),index)
-                {
-                }
-                
-                public void SetValue(Cursor value)
-                {
-                    this.SetValue(value.ToString());
-                }
-                
-                public Cursor GetCursor()
-                {
-                    return (Cursor)Enum.Parse(typeof(Cursor), this.values[this.selected]);
                 }
                 
                 public override string GetLine()
                 {
-                    return this.name + " = System.Windows.Forms.Cursor." + this.values[this.selected];
+                    return Name + " = \"" + Value + "\";";
                 }
             }
             
-            public class FlatStyleProperty : PropertyTypes.SelectionProperty
+            public class AccessibleNameProperty : Property<string>
             {
-                public FlatStyleProperty() : base("FlatStyle", Enum.GetNames(typeof(FlatStyle)))
+                public AccessibleNameProperty(string value) : base(PropertyNames.AccessibleName, 
+                    value, DataTypes.String)
                 {
-                }
-                
-                public FlatStyleProperty(string value) : base("FlatStyle", Enum.GetNames(typeof(FlatStyle)))
-                {
-                    this.SetValue(value);
-                }
-                
-                public FlatStyleProperty(FlatStyle value) : base("FlatStyle", Enum.GetNames(typeof(FlatStyle)))
-                {
-                    this.SetValue(value.ToString());
-                }
-                
-                public FlatStyleProperty(int index) : base("FlatStyle", Enum.GetNames(typeof(FlatStyle)),index)
-                {
-                }
-                
-                public void SetValue(FlatStyle value)
-                {
-                    this.SetValue(value.ToString());
-                }
-                
-                public FlatStyle GetFlatStyle()
-                {
-                    return (FlatStyle)Enum.Parse(typeof(FlatStyle), this.values[this.selected]);
                 }
                 
                 public override string GetLine()
                 {
-                    return this.name + " = System.Windows.Forms.FlatStyle." + this.values[this.selected];
+                    return Name + " = \"" + Value + "\";";
                 }
             }
             
-            //TODO:: make a font property
-            
-            //TODO:: make a image property
-            
-            
-            
-            public class ForeColorProperty : PropertyTypes.ColorProperty
+            public class AccessibleRoleProperty : Property<AccessibleRole>
             {
-                public ForeColorProperty(System.Drawing.Color value) : base("ForeColor", value)
+                public AccessibleRoleProperty(AccessibleRole value) : base(PropertyNames.AccessibleRole, 
+                    value, DataTypes.Enum)
                 {
                 }
             }
+            
+            public class BackColorProperty : Property<System.Drawing.Color>
+            {
+                public BackColorProperty(System.Drawing.Color value) : base(PropertyNames.BackColor, 
+                    value, DataTypes.Color)
+                {
+                }
+                
+                //TODO: implement 3 types of color
+                public override string GetLine()
+                {
+                    return Name + " = Color.FromArgb(" + Value.A + ", " + Value.R + ", " + Value.G + ", " + Value.B + ");";
+                }
+            }
+            
+            public class FontProperty : Property<System.Drawing.Font>
+            {
+                public FontProperty(System.Drawing.Font value) : base(PropertyNames.Font, 
+                    value, DataTypes.Font)
+                {
+                }
+                
+                public override string GetLine()
+                {
+                    return Name + " = new Font(\"" + Value.Name + "\", " + Value.Size + ", " + Value.Style + ");";
+                }
+            }
+            
+            
         }
-
-        public interface IProperty
-        {
-            void SetValue(object value);
-            object GetValue();
-            string GetPropertyName();
-            string GetPropertyType();
-            string GetLine();
-        }
-
     }
-}   
+}
