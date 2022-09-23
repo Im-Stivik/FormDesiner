@@ -15,6 +15,12 @@ namespace FormDesiner
         public Form1()
         {
             InitializeComponent();
+            ItemMennager.Item item = new ItemMennager.Items.Lable(new PropertyMennager.Propertyes.AutoSizeProperty(true),
+                new PropertyMennager.Propertyes.LocationProperty(new Point(0,0)), new PropertyMennager.Propertyes.NameProperty("label1"),
+                new PropertyMennager.Propertyes.SizeProperty(new Size(35,13)), new PropertyMennager.Propertyes.TabIndexProperty(0),
+                new PropertyMennager.Propertyes.TextProperty("label1"));
+            
+            Console.WriteLine(item.PrintProperties());
         }
     }
 }
