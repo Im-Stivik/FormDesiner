@@ -18,3 +18,13 @@ C:/Users/s.mogi/Desktop/New folder/FormDesiner/FormDesiner/obj/Debug/FormDesiner
 /home/stivik/Projects/Visual Programing/FormDesiner/obj/Debug/FormDesiner.csproj.CoreCompileInputs.cache
 /home/stivik/Projects/Visual Programing/FormDesiner/obj/Debug/FormDesiner.exe
 /home/stivik/Projects/Visual Programing/FormDesiner/obj/Debug/FormDesiner.pdb
+/home/stivik/Documents/FormDesiner/bin/Debug/FormDesiner.exe.config
+/home/stivik/Documents/FormDesiner/bin/Debug/FormDesiner.exe
+/home/stivik/Documents/FormDesiner/bin/Debug/FormDesiner.pdb
+/home/stivik/Documents/FormDesiner/obj/Debug/FormDesiner.csproj.AssemblyReference.cache
+/home/stivik/Documents/FormDesiner/obj/Debug/FormDesiner.Form1.resources
+/home/stivik/Documents/FormDesiner/obj/Debug/FormDesiner.Properties.Resources.resources
+/home/stivik/Documents/FormDesiner/obj/Debug/FormDesiner.csproj.GenerateResource.cache
+/home/stivik/Documents/FormDesiner/obj/Debug/FormDesiner.csproj.CoreCompileInputs.cache
+/home/stivik/Documents/FormDesiner/obj/Debug/FormDesiner.exe
+/home/stivik/Documents/FormDesiner/obj/Debug/FormDesiner.pdb
